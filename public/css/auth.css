@@ -1,0 +1,83 @@
+/* ==========================================================================
+   AvícolaPro Control - Authentication Screens (Login & Register)
+   ========================================================================== */
+
+/* Split Screen Left Visual Hero */
+.auth-hero-panel {
+    background: linear-gradient(135deg, rgba(9, 21, 35, 0.94) 0%, rgba(30, 42, 56, 0.88) 100%), 
+                url('https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-hero-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(27, 109, 36, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Platform Tag Badge */
+.platform-tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    background: rgba(160, 243, 153, 0.15);
+    border: 1px solid rgba(163, 246, 156, 0.35);
+    color: #a3f69c;
+}
+
+/* Metric Pill Cards in Auth Hero */
+.auth-metric-pill {
+    padding: 1rem 1.25rem;
+    border-radius: var(--stitch-radius-md);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.auth-metric-pill:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Password Strength Meter */
+.strength-meter-bar {
+    height: 4px;
+    border-radius: 9999px;
+    background-color: var(--stitch-outline-variant);
+    flex: 1;
+    transition: background-color 0.3s ease;
+}
+
+.strength-meter-bar.active {
+    background-color: var(--stitch-secondary);
+}
+
+.strength-meter-bar.warning {
+    background-color: var(--stitch-warning);
+}
+
+.strength-meter-bar.danger {
+    background-color: var(--stitch-error);
+}
+
+/* Demo Credentials Quick Pill */
+.btn-credential-pill {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-credential-pill:hover {
+    transform: scale(1.03);
+}

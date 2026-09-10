@@ -1,0 +1,79 @@
+/* ==========================================================================
+   AvícolaPro Control - SCADA Dashboard Styles
+   ========================================================================== */
+
+/* Telemetry Summary Cards */
+.telemetry-summary-card {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.telemetry-summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 24px rgba(30, 42, 56, 0.08);
+}
+
+.telemetry-icon-box {
+    min-width: 56px;
+    height: 56px;
+    border-radius: var(--stitch-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease;
+}
+
+.telemetry-summary-card:hover .telemetry-icon-box {
+    transform: scale(1.08);
+}
+
+/* Custom Agricultural Green Slider for Curtain Control */
+.form-range-curtain {
+    width: 100%;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: var(--stitch-surface-container);
+    cursor: pointer;
+    accent-color: var(--stitch-secondary);
+}
+
+.form-range-curtain::-webkit-slider-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--stitch-secondary);
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.form-range-curtain::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background-color: var(--stitch-secondary-light);
+}
+
+/* Alert Items */
+.alert-feed-item {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    border-left-width: 4px !important;
+}
+
+.alert-feed-item:hover {
+    transform: translateX(4px);
+}
+
+/* Operational Tiles */
+.operational-tile {
+    transition: all 0.2s ease;
+}
+
+.operational-tile:hover {
+    border-color: var(--stitch-secondary-fixed);
+    background-color: #fafffa;
+}
+
+/* Chart Canvas Container */
+.chart-container-scada {
+    position: relative;
+    height: 280px;
+    width: 100%;
+}

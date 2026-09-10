@@ -1,0 +1,108 @@
+/* ==========================================================================
+   AvícolaPro Control - Layout Styles (TopBar, Sidebar, Main Shell)
+   ========================================================================== */
+
+/* Top Navigation Bar */
+.stitch-topbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--stitch-outline-variant);
+    box-shadow: 0px 4px 20px rgba(30, 42, 56, 0.05);
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    transition: background-color 0.2s ease;
+}
+
+/* Sidebar Navigation */
+.stitch-sidebar {
+    width: var(--stitch-sidebar-width);
+    background-color: var(--stitch-surface);
+    border-right: 1px solid var(--stitch-outline-variant);
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1020;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Main Content Wrapper */
+.stitch-main-content {
+    margin-left: var(--stitch-sidebar-width);
+    padding: 2rem;
+    min-height: calc(100vh - 64px);
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 991.98px) {
+    .stitch-sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    }
+    .stitch-sidebar.show {
+        transform: translateX(0);
+    }
+    .stitch-main-content {
+        margin-left: 0;
+        padding: 1.25rem;
+    }
+}
+
+/* Sidebar Navigation Links */
+.nav-link-stitch {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--stitch-radius-md);
+    color: var(--stitch-on-surface-variant);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 0.35rem;
+}
+
+.nav-link-stitch:hover {
+    background-color: var(--stitch-surface-low);
+    color: var(--stitch-primary);
+    transform: translateX(3px);
+}
+
+.nav-link-stitch.active {
+    background-color: #e8f5e9;
+    color: var(--stitch-secondary);
+    font-weight: 700;
+    border-left: 4px solid var(--stitch-secondary);
+}
+
+.nav-link-stitch.active .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Mobile Sidebar Backdrop */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(9, 21, 35, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1015;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-backdrop.show {
+    display: block;
+    opacity: 1;
+}

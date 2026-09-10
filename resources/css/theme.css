@@ -1,0 +1,253 @@
+/* ==========================================================================
+   AvícolaPro Control - Stitch IoT Design System Tokens & Base Styles
+   ========================================================================== */
+
+:root {
+    /* Stitch Color Palette */
+    --stitch-primary: #091523;
+    --stitch-primary-container: #1e2a38;
+    --stitch-secondary: #1b6d24;
+    --stitch-secondary-light: #2E7D32;
+    --stitch-secondary-container: #a0f399;
+    --stitch-secondary-fixed: #a3f69c;
+    --stitch-background: #f8f9fb;
+    --stitch-surface: #ffffff;
+    --stitch-surface-container: #eceef0;
+    --stitch-surface-low: #f2f4f6;
+    --stitch-outline: #75777c;
+    --stitch-outline-variant: #e0e3e5;
+    --stitch-on-surface: #191c1e;
+    --stitch-on-surface-variant: #44474c;
+    --stitch-warning: #e17100;
+    --stitch-warning-bg: #fff3e0;
+    --stitch-error: #ba1a1a;
+    --stitch-error-bg: #ffdad6;
+    --stitch-info: #0284c7;
+    --stitch-info-bg: #e0f2fe;
+
+    /* Structural Tokens */
+    --stitch-sidebar-width: 260px;
+    --stitch-radius-sm: 8px;
+    --stitch-radius-md: 12px;
+    --stitch-radius-lg: 16px;
+    --stitch-shadow-card: 0px 4px 20px rgba(30, 42, 56, 0.05);
+    --stitch-shadow-hover: 0px 8px 25px rgba(30, 42, 56, 0.09);
+    --stitch-transition-speed: 0.25s;
+}
+
+/* Base Body Styles */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--stitch-background);
+    color: var(--stitch-on-surface);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Material Symbols Integration */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filled-icon {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Typography & Caps */
+.font-label-caps {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--stitch-outline);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--stitch-primary);
+    line-height: 1.1;
+}
+
+/* Cards & Surfaces */
+.stitch-card {
+    background-color: var(--stitch-surface);
+    border: 1px solid var(--stitch-outline-variant);
+    border-radius: var(--stitch-radius-lg);
+    box-shadow: var(--stitch-shadow-card);
+    transition: transform var(--stitch-transition-speed) ease, box-shadow var(--stitch-transition-speed) ease;
+}
+
+.stitch-card.interactive-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--stitch-shadow-hover);
+}
+
+/* Buttons */
+.btn-green-gradient {
+    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--stitch-radius-md);
+    font-weight: 600;
+    transition: all var(--stitch-transition-speed) ease;
+}
+
+.btn-green-gradient:hover {
+    background: linear-gradient(135deg, #388E3C 0%, #2E7D32 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(27, 109, 36, 0.28);
+}
+
+.btn-green-gradient:active {
+    transform: translateY(0);
+}
+
+.btn-primary-gradient {
+    background: linear-gradient(135deg, var(--stitch-primary) 0%, var(--stitch-secondary) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--stitch-radius-md);
+    font-weight: 600;
+    transition: all var(--stitch-transition-speed) ease;
+}
+
+.btn-primary-gradient:hover {
+    color: #ffffff;
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(9, 21, 35, 0.22);
+}
+
+/* Forms */
+.form-control-stitch {
+    background-color: var(--stitch-surface-low);
+    border: 1px solid var(--stitch-outline-variant);
+    border-radius: var(--stitch-radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: var(--stitch-on-surface);
+    transition: all 0.15s ease;
+}
+
+.form-control-stitch:focus {
+    background-color: #ffffff;
+    border-color: var(--stitch-secondary);
+    box-shadow: 0 0 0 0.2rem rgba(27, 109, 36, 0.15);
+}
+
+.input-group-stitch .input-group-text {
+    background-color: var(--stitch-surface-low);
+    border: 1px solid var(--stitch-outline-variant);
+    border-right: none;
+    border-radius: var(--stitch-radius-md) 0 0 var(--stitch-radius-md);
+    color: var(--stitch-outline);
+}
+
+.input-group-stitch .form-control {
+    border-left: none;
+    border-radius: 0 var(--stitch-radius-md) var(--stitch-radius-md) 0;
+}
+
+/* Badges */
+.badge-stitch-secondary {
+    background-color: var(--stitch-secondary-container);
+    color: #1b6d24;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.badge-stitch-admin {
+    background-color: #e8eaf6;
+    color: #283593;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.badge-stitch-tecnico {
+    background-color: #e0f2f1;
+    color: #00695c;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.badge-stitch-operador {
+    background-color: #f1f8e9;
+    color: #33691e;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseTelemetry {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(27, 109, 36, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(27, 109, 36, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(27, 109, 36, 0);
+    }
+}
+
+@keyframes slideDownAlert {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+    animation: slideDownAlert 0.35s ease-out forwards;
+}
+
+.telemetry-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #1b6d24;
+    display: inline-block;
+    animation: pulseTelemetry 2s infinite;
+}
