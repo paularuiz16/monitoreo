@@ -55,6 +55,13 @@
                 </div>
             @endif
 
+            @if (session('error'))
+                <div class="alert alert-warning d-flex align-items-center gap-2 py-1.5 px-3 rounded-3 small mb-2 border-0">
+                    <span class="material-symbols-outlined fs-5 text-warning">warning</span>
+                    <div class="small">{{ session('error') }}</div>
+                </div>
+            @endif
+
             @if ($errors->any())
                 <div class="alert alert-danger py-1.5 px-3 rounded-3 small mb-2 border-0">
                     @foreach ($errors->all() as $error)

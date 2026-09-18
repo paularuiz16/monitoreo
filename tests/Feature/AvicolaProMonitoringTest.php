@@ -199,4 +199,22 @@ class AvicolaProMonitoringTest extends TestCase
         $this->assertEquals(75.0, (float) $latest->curtain_position);
         $this->assertEquals('MANUAL', $latest->curtain_mode);
     }
+
+    public function test_token_mismatch_exception_redirects_gracefully_to_login(): void
+    {
+        $handler = app(\Illuminate\Contracts\Debug\ExceptionHandler::class);
+        $request = \Illuminate\Http\Request::create('/login', 'POST');
+
+        // 1. Direct TokenMismatchException
+        $exception = new \Illuminate\Session\TokenMismatchException('CSRF token mismatch.');
+        $response = $handler->render($request, $exception);
+        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(route('login'), $response->headers->get('Location'));
+
+        // 2. HttpException 419
+        $httpException = new \Symfony\Component\HttpKernel\Exception\HttpException(419, 'Page Expired');
+        $responseHttp = $handler->render($request, $httpException);
+        $this->assertEquals(302, $responseHttp->getStatusCode());
+        $this->assertEquals(route('login'), $responseHttp->headers->get('Location'));
+    }
 }
