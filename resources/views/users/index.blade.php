@@ -149,8 +149,8 @@
     </div>
 
     @if ($users->hasPages())
-        <div class="p-3 border-top bg-light">
-            {{ $users->links() }}
+        <div class="p-3 border-top bg-light d-flex justify-content-center">
+            {{ $users->links('pagination::bootstrap-5') }}
         </div>
     @endif
 </div>

@@ -17,6 +17,10 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Acceso denegado: Solo el Administrador tiene autorización para gestionar el personal del sistema.');
+        }
+
         $users = User::with('creator')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -38,14 +42,22 @@ class UserController extends Controller
      */
     public function create(): View
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Acceso denegado: Solo el Administrador tiene autorización para dar de alta nuevo personal.');
+        }
+
         return view('users.create');
     }
 
     /**
-     * Guardar usuario creado internamente por un operador/administrador autenticado.
+     * Guardar usuario creado internamente por un administrador autenticado.
      */
     public function store(Request $request): RedirectResponse
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Acceso denegado: Solo el Administrador puede registrar nuevo personal en el sistema.');
+        }
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'last_name' => ['nullable', 'string', 'max:100'],
@@ -80,10 +92,14 @@ class UserController extends Controller
     }
 
     /**
-     * Activar o suspender un usuario del sistema.
+     * Activar o suspender un usuario del sistema (solo administrador).
      */
     public function toggleStatus(User $user): RedirectResponse
     {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Acceso denegado: Solo el Administrador puede modificar el estado del personal.');
+        }
+
         // Evitar que el usuario se inhabilite a sí mismo
         if ($user->id === Auth::id()) {
             return back()->with('error', 'No puedes desactivar tu propia cuenta activa.');

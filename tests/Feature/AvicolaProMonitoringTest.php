@@ -24,13 +24,26 @@ class AvicolaProMonitoringTest extends TestCase
         $response->assertRedirect(route('login'));
     }
 
-    public function test_login_screen_renders_successfully(): void
+    public function test_login_screen_renders_successfully_with_logo_and_without_iot_badge(): void
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
         $response->assertSee('AvícolaPro Control');
-        $response->assertSee('Bienvenido de nuevo');
-        $response->assertSee('Plataforma IoT Empresarial');
+        $response->assertSee('logo.png');
+        $response->assertDontSee('Plataforma IoT Empresarial');
+        // Verifica presencia de las cuentas precargadas (operadores y técnico)
+        $response->assertSee('tecnico@poultrysense.io');
+        $response->assertSee('operator@poultrysense.io');
+        $response->assertSee('operator2@poultrysense.io');
+    }
+
+    public function test_admin_name_is_maria_paula_ruiz(): void
+    {
+        $admin = User::where('email', 'admin@poultrysense.io')->first();
+        $this->assertNotNull($admin);
+        $this->assertEquals('María Paula', $admin->name);
+        $this->assertEquals('Ruiz', $admin->last_name);
+        $this->assertEquals('María Paula Ruiz', $admin->full_name);
     }
 
     public function test_user_can_login_with_valid_credentials(): void
@@ -52,6 +65,7 @@ class AvicolaProMonitoringTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Crear cuenta');
         $response->assertSee('Optimización');
+        $response->assertSee('logo.png');
     }
 
     public function test_user_can_register_via_public_form(): void
@@ -70,11 +84,11 @@ class AvicolaProMonitoringTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => 'mariana.suarez@empresa.com',
             'role' => 'operador',
-            'created_by' => null, // Confirma autoregistro público
+            'created_by' => null,
         ]);
     }
 
-    public function test_authenticated_user_can_view_dashboard_with_telemetry(): void
+    public function test_authenticated_user_can_view_dashboard_without_pressure_and_with_panel_links(): void
     {
         $user = User::where('email', 'admin@poultrysense.io')->first();
 
@@ -83,12 +97,38 @@ class AvicolaProMonitoringTest extends TestCase
         $response->assertSee('TEMP. INTERIOR');
         $response->assertSee('TEMP. EXTERIOR');
         $response->assertSee('HUMEDAD RELATIVA');
-        $response->assertSee('PRESIÓN ATMOSFÉRICA');
-        $response->assertSee('Tendencias Climáticas del Galpón');
-        $response->assertSee('Panel de Control');
+        $response->assertSee('SALUD DEL GALPÓN');
+        // Verifica que se removió la presión atmosférica
+        $response->assertDontSee('PRESIÓN ATMOSFÉRICA');
+        // Verifica enlaces a paneles especializados
+        $response->assertSee('Panel de Control Climático');
+        $response->assertSee('Tendencias SCADA');
     }
 
-    public function test_authenticated_user_can_access_user_management_module(): void
+    public function test_authenticated_user_can_access_dedicated_climate_panel(): void
+    {
+        $user = User::where('email', 'operator@poultrysense.io')->first();
+
+        $response = $this->actingAs($user)->get('/control-climatico');
+        $response->assertStatus(200);
+        $response->assertSee('Control Climático y Automatización Térmica');
+        $response->assertSee('Extractores de Túnel');
+        $response->assertSee('TEMP. INTERIOR');
+        $response->assertDontSee('PRESIÓN ATMOSFÉRICA');
+    }
+
+    public function test_authenticated_user_can_access_dedicated_scada_trends_panel(): void
+    {
+        $user = User::where('email', 'operator@poultrysense.io')->first();
+
+        $response = $this->actingAs($user)->get('/tendencias-scada');
+        $response->assertStatus(200);
+        $response->assertSee('Tendencias SCADA');
+        $response->assertSee('Curvas Temporales de Climatización');
+        $response->assertSee('Registro Cronológico de Muestras de Telemetría');
+    }
+
+    public function test_admin_can_access_and_manage_staff(): void
     {
         $admin = User::where('email', 'admin@poultrysense.io')->first();
 
@@ -96,13 +136,9 @@ class AvicolaProMonitoringTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Módulo Administrativo de Usuarios');
         $response->assertSee('Directorio de Usuarios del Sistema');
-    }
 
-    public function test_admin_can_create_internal_user_with_assigned_created_by(): void
-    {
-        $admin = User::where('email', 'admin@poultrysense.io')->first();
-
-        $response = $this->actingAs($admin)->post('/users', [
+        // Admin can create staff
+        $createResponse = $this->actingAs($admin)->post('/users', [
             'name' => 'Fernando',
             'last_name' => 'Castro',
             'email' => 'fcastro@poultrysense.io',
@@ -112,12 +148,41 @@ class AvicolaProMonitoringTest extends TestCase
             'is_active' => '1',
         ]);
 
-        $response->assertRedirect(route('users.index'));
+        $createResponse->assertRedirect(route('users.index'));
         $this->assertDatabaseHas('users', [
             'email' => 'fcastro@poultrysense.io',
             'role' => 'tecnico',
-            'created_by' => $admin->id, // Distingue creación interna
+            'created_by' => $admin->id,
         ]);
+    }
+
+    public function test_operator_is_strictly_forbidden_from_staff_management(): void
+    {
+        $operator = User::where('email', 'operator@poultrysense.io')->first();
+
+        // 1. Acceso a listado denegado
+        $responseIndex = $this->actingAs($operator)->get('/users');
+        $responseIndex->assertStatus(403);
+
+        // 2. Acceso a formulario de creación denegado
+        $responseCreate = $this->actingAs($operator)->get('/users/create');
+        $responseCreate->assertStatus(403);
+
+        // 3. Intento de crear usuario denegado
+        $responseStore = $this->actingAs($operator)->post('/users', [
+            'name' => 'Intruso',
+            'last_name' => 'Prueba',
+            'email' => 'intruso@poultrysense.io',
+            'role' => 'operador',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ]);
+        $responseStore->assertStatus(403);
+
+        // 4. Intento de alternar estado denegado
+        $targetUser = User::where('email', 'operator2@poultrysense.io')->first();
+        $responseToggle = $this->actingAs($operator)->patch("/users/{$targetUser->id}/toggle");
+        $responseToggle->assertStatus(403);
     }
 
     public function test_curtain_adjustment_updates_telemetry(): void

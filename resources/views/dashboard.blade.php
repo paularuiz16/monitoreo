@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<!-- 1. Summary Cards Section (4 Métricas Clave de Stitch) -->
+<!-- 1. Summary Cards Section (Sin presión atmosférica) -->
 <div class="row g-3 mb-4" id="seccion-sensores">
     <!-- Temp. Interior -->
     <div class="col-12 col-sm-6 col-xl-3">
@@ -84,143 +84,116 @@
         </div>
     </div>
 
-    <!-- Presión Atmosférica & Cortinas -->
+    <!-- Índice de Salud del Galpón (Reemplaza presión atmosférica) -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="stitch-card telemetry-summary-card p-3 h-100 d-flex align-items-center gap-3">
-            <div class="telemetry-icon-box shadow-sm" style="background-color: #fef3c7; color: #b45309;">
-                <span class="material-symbols-outlined fs-2">speed</span>
+            <div class="telemetry-icon-box shadow-sm" style="background-color: #d1fae5; color: #059669;">
+                <span class="material-symbols-outlined fs-2">verified</span>
             </div>
             <div class="flex-grow-1">
-                <span class="font-label-caps">PRESIÓN ATMOSFÉRICA</span>
+                <span class="font-label-caps">SALUD DEL GALPÓN</span>
                 <div class="d-flex align-items-baseline gap-2">
-                    <h2 class="metric-value mb-0" style="font-size: 1.6rem;">{{ round($latest->atmospheric_pressure, 1) }} <small class="fs-6 text-muted">hPa</small></h2>
+                    <h2 class="metric-value mb-0">{{ round($latest->health_index ?? 94, 0) }} <small class="fs-6 text-muted">/100</small></h2>
+                    <span class="badge bg-success bg-opacity-10 text-success small">Ideal</span>
                 </div>
-                <div class="d-flex align-items-center gap-1 mt-1 text-muted" style="font-size: 11px;">
-                    <span>Cortinas: <strong>{{ round($latest->curtain_position, 0) }}%</strong></span>
-                    <span class="badge bg-secondary bg-opacity-10 text-secondary p-0 px-1">{{ $latest->curtain_mode }}</span>
+                <div class="text-muted small mt-1" style="font-size: 11px;">
+                    Ventilación: <strong>{{ $latest->ventilation_status ?? 'OPTIMO' }}</strong>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 2. Main Row: SCADA Climate Trends Chart & Control Panel -->
-<div class="row g-4 mb-4" id="seccion-tendencias">
-    <!-- Climate Trends Chart (8 Columns) -->
-    <div class="col-12 col-xl-8">
-        <div class="stitch-card h-100 p-4">
-            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-4">
-                <div>
-                    <h5 class="fw-bold text-dark mb-1">Tendencias Climáticas del Galpón</h5>
-                    <p class="text-muted small mb-0">Rendimiento e historial de telemetría de las últimas 24 Horas</p>
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="d-flex align-items-center gap-1">
-                        <span class="rounded-circle d-inline-block" style="width: 10px; height: 10px; background-color: var(--stitch-secondary);"></span>
-                        <span class="small fw-semibold text-muted">Temp (°C)</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-1">
-                        <span class="rounded-circle d-inline-block" style="width: 10px; height: 10px; background-color: var(--stitch-primary);"></span>
-                        <span class="small fw-semibold text-muted">Humedad (%)</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-1">
-                        <span class="rounded-circle d-inline-block" style="width: 10px; height: 10px; background-color: var(--stitch-info);"></span>
-                        <span class="small fw-semibold text-muted">Presión (hPa)</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Canvas for Chart.js (Estilizado en dashboard.css) -->
-            <div class="chart-container-scada">
-                <canvas id="scadaChart"></canvas>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center pt-3 mt-3 border-top text-muted font-label-caps" style="font-size: 11px;">
-                <span>00:00</span>
-                <span>04:00</span>
-                <span>08:00</span>
-                <span>12:00</span>
-                <span>16:00</span>
-                <span>20:00</span>
-                <span>Ahora</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Curtain & Ventilation Control Panel (4 Columns) -->
-    <div class="col-12 col-xl-4">
-        <div class="stitch-card h-100 p-4 d-flex flex-column justify-content-between">
+<!-- 2. Acceso Directo a los Paneles Especializados (Control Climático y Tendencias SCADA) -->
+<div class="row g-4 mb-4">
+    <!-- Panel Especializado: Control Climático -->
+    <div class="col-12 col-lg-6">
+        <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between interactive-hover" style="border-left: 5px solid var(--stitch-secondary);">
             <div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Panel de Control</h5>
-                    <span class="badge badge-stitch-secondary">
-                        Modo {{ $latest->curtain_mode }}
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-3 p-2 text-white shadow-sm" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                            <span class="material-symbols-outlined fs-4">thermostat</span>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-0">Panel de Control Climático</h5>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill small">
+                        Especializado
                     </span>
                 </div>
-                <p class="text-muted small mb-4">Comando manual de actuadores electromecánicos y compuertas de ventilación.</p>
+                <p class="text-muted small mb-3">
+                    Monitoree el diferencial térmico, controle los extractores, verifique el estado del enfriamiento evaporativo y gestione la climatización automatizada del lote.
+                </p>
 
-                <!-- Curtain Adjustment Form -->
-                <form method="POST" action="{{ route('dashboard.curtain') }}" id="curtainForm">
-                    @csrf
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <label for="curtainRange" class="form-label font-label-caps mb-0">Apertura de Cortinas</label>
-                            <span class="badge bg-dark text-white fw-bold px-2 py-1" id="curtainValueBadge">
-                                {{ round($latest->curtain_position, 0) }}%
-                            </span>
-                        </div>
-                        <input type="range" 
-                               name="curtain_position" 
-                               class="form-range form-range-curtain" 
-                               id="curtainRange" 
-                               min="0" 
-                               max="100" 
-                               step="5" 
-                               value="{{ round($latest->curtain_position, 0) }}">
-                        <div class="d-flex justify-content-between text-muted" style="font-size: 10px; font-weight: 700;">
-                            <span>CERRADA (0%)</span>
-                            <span>INTERMEDIA (50%)</span>
-                            <span>ABIERTA (100%)</span>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border small">
+                            <div class="text-muted" style="font-size: 11px;">Diferencial Térmico</div>
+                            <div class="fw-bold text-dark">+{{ round(($latest->external_temperature ?? 28) - $latest->temperature, 1) }}°C</div>
                         </div>
                     </div>
-
-                    <input type="hidden" name="curtain_mode" value="MANUAL">
-
-                    <div class="row g-2 mb-4">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-light border w-100 p-3 rounded-3 d-flex flex-column align-items-center gap-1" onclick="notifyActuator('Iluminación de Galpón', 'Nivel fotoperiodo fijado en 85%. Protocolo activo.')">
-                                <span class="material-symbols-outlined text-warning fs-3">lightbulb</span>
-                                <span class="font-label-caps mb-0 text-dark">Iluminación</span>
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-light border w-100 p-3 rounded-3 d-flex flex-column align-items-center gap-1" onclick="notifyActuator('Ventilación Túnel', 'Extractores en velocidad variable óptima. Caudal regulado.')">
-                                <span class="material-symbols-outlined text-primary fs-3">air</span>
-                                <span class="font-label-caps mb-0 text-dark">Ventilación</span>
-                            </button>
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border small">
+                            <div class="text-muted" style="font-size: 11px;">Compuertas / Cortinas</div>
+                            <div class="fw-bold text-success">{{ round($latest->curtain_position, 0) }}% ({{ $latest->curtain_mode }})</div>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary-gradient w-100 py-3 rounded-3 font-label-caps text-white fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
-                        <span class="material-symbols-outlined fs-5">tune</span>
-                        <span>Aplicar Cambios a Actuadores</span>
-                    </button>
-                </form>
+                </div>
             </div>
 
-            <div class="mt-4 pt-3 border-top d-flex align-items-center justify-content-between text-muted small">
-                <span>Estado Servomotor:</span>
-                <span class="text-success fw-bold d-flex align-items-center gap-1">
-                    <span class="material-symbols-outlined fs-6">check_circle</span> Calibrado
-                </span>
+            <a href="{{ route('climate.index') }}" class="btn btn-green-gradient py-2 d-flex align-items-center justify-content-center gap-2 text-decoration-none shadow-sm">
+                <span>Ingresar al Panel de Control Climático</span>
+                <span class="material-symbols-outlined fs-5">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Panel Especializado: Tendencias SCADA -->
+    <div class="col-12 col-lg-6">
+        <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between interactive-hover" style="border-left: 5px solid var(--stitch-blue);">
+            <div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="rounded-3 p-2 text-white shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);">
+                            <span class="material-symbols-outlined fs-4">leaderboard</span>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-0">Tendencias SCADA & Curvas</h5>
+                    </div>
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1 rounded-pill small">
+                        Analítica 24h
+                    </span>
+                </div>
+                <p class="text-muted small mb-3">
+                    Analice el historial térmico continuo, gráficos comparativos de temperatura vs. humedad y la bitácora cronológica completa de telemetría IoT.
+                </p>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border small">
+                            <div class="text-muted" style="font-size: 11px;">Temp. Media 24h</div>
+                            <div class="fw-bold text-dark">{{ $stats24h['temp_avg'] }}°C</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border small">
+                            <div class="text-muted" style="font-size: 11px;">Humedad Media 24h</div>
+                            <div class="fw-bold text-primary">{{ $stats24h['hum_avg'] }}%</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <a href="{{ route('scada.index') }}" class="btn btn-blue-gradient py-2 d-flex align-items-center justify-content-center gap-2 text-decoration-none shadow-sm">
+                <span>Ver Curvas y Tendencias SCADA</span>
+                <span class="material-symbols-outlined fs-5">arrow_forward</span>
+            </a>
         </div>
     </div>
 </div>
 
-<!-- 3. Alertas Recientes & Resumen Operativo -->
+<!-- 3. Alertas Recientes & Resumen Operativo / Personal (Exclusivo Administrador) -->
 <div class="row g-4 mb-4">
-    <!-- Alertas Recientes (Fiel a Stitch) -->
+    <!-- Alertas Recientes -->
     <div class="col-12 col-xl-6">
         <div class="stitch-card p-4 h-100">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -249,62 +222,100 @@
                 @endforeach
             </div>
 
-            <button type="button" class="btn btn-link text-decoration-none w-100 mt-3 p-0 small fw-bold" style="color: var(--stitch-primary);" onclick="notifyActuator('Registro de Eventos', 'Descargando log completo de telemetría y diagnósticos de sensores.')">
+            <button type="button" class="btn btn-link text-decoration-none w-100 mt-3 p-0 small fw-bold" style="color: var(--stitch-blue);" onclick="alert('Registro de Eventos:\nDescargando historial completo de notificaciones y diagnósticos.')">
                 Ver Todos los Registros de Notificación &rarr;
             </button>
         </div>
     </div>
 
-    <!-- Quick User Creation Module Callout (Módulo Requerido 2) -->
+    <!-- Gestión de Personal (SOLO Administrador) o Tarjeta de Turno para Operadores -->
     <div class="col-12 col-xl-6">
-        <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #ffffff 0%, #f8fbf8 100%);">
-            <div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-dark mb-0">Gestión de Personal & Roles</h5>
-                    <span class="badge badge-stitch-admin">Acceso Administrativo</span>
-                </div>
-                <p class="text-muted small mb-3">
-                    Como usuario autenticado, puedes dar de alta a nuevos operadores y técnicos directamente desde el panel interno, garantizando la trazabilidad de accesos.
-                </p>
+        @if (Auth::user()->isAdmin())
+            <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Gestión de Personal & Roles</h5>
+                        <span class="badge badge-stitch-admin">Acceso Exclusivo de Administrador</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Como administrador del sistema, eres el único autorizado para registrar nuevo personal, habilitar o suspender operadores y técnicos de galpón.
+                    </p>
 
-                <div class="row g-2 mb-3">
-                    <div class="col-sm-6">
-                        <div class="p-3 bg-white rounded-3 border shadow-sm">
-                            <div class="font-label-caps text-muted">Sesión Actual</div>
-                            <div class="fw-bold text-dark text-truncate">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</div>
-                            <span class="badge badge-stitch-{{ Auth::user()->role }} mt-1">{{ strtoupper(Auth::user()->role) }}</span>
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-white rounded-3 border shadow-sm">
+                                <div class="font-label-caps text-muted">Sesión Actual</div>
+                                <div class="fw-bold text-dark text-truncate">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</div>
+                                <span class="badge badge-stitch-admin mt-1">ADMINISTRADOR</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-white rounded-3 border shadow-sm">
+                                <div class="font-label-caps text-muted">Usuarios Registrados</div>
+                                <div class="fw-bold text-dark">{{ \App\Models\User::count() }} Cuentas en Sistema</div>
+                                <span class="badge bg-success bg-opacity-10 text-success mt-1">Activas</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="p-3 bg-white rounded-3 border shadow-sm">
-                            <div class="font-label-caps text-muted">Usuarios Registrados</div>
-                            <div class="fw-bold text-dark">{{ \App\Models\User::count() }} Cuentas en Sistema</div>
-                            <span class="badge bg-success bg-opacity-10 text-success mt-1">Activas</span>
+                </div>
+
+                <div class="d-flex gap-2 pt-2">
+                    <a href="{{ route('users.create') }}" class="btn btn-green-gradient flex-grow-1 py-2 text-center text-decoration-none">
+                        <span class="material-symbols-outlined fs-5 align-middle me-1">person_add</span> Dar de Alta Nuevo Personal
+                    </a>
+                    <a href="{{ route('users.index') }}" class="btn btn-outline-secondary py-2 text-decoration-none">
+                        Directorio
+                    </a>
+                </div>
+            </div>
+        @else
+            <!-- Vista para Operadores y Técnicos: Estado de Turno Operativo -->
+            <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Terminal Operativo de Galpón</h5>
+                        <span class="badge badge-stitch-operador">Operador Activo</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Has iniciado sesión con credenciales de operador. Tienes acceso completo al monitoreo en tiempo real y protocolos de seguridad del galpón.
+                    </p>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-white rounded-3 border shadow-sm">
+                                <div class="font-label-caps text-muted">Operador en Turno</div>
+                                <div class="fw-bold text-dark text-truncate">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</div>
+                                <span class="badge bg-success bg-opacity-10 text-success mt-1">En Servicio</span>
+                            </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 bg-white rounded-3 border shadow-sm">
+                                <div class="font-label-caps text-muted">Control de Personal</div>
+                                <div class="small text-muted mt-1">Reservado exclusivamente para la Administración.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-white rounded-3 border d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="material-symbols-outlined text-success fs-5">lock</span>
+                        <span class="small text-muted">Protocolo de seguridad: Trazabilidad por operador activa.</span>
                     </div>
                 </div>
             </div>
-
-            <div class="d-flex gap-2 pt-2">
-                <a href="{{ route('users.create') }}" class="btn btn-green-gradient flex-grow-1 py-2 text-center text-decoration-none">
-                    <span class="material-symbols-outlined fs-5 align-middle me-1">person_add</span> Dar de Alta Nuevo Usuario
-                </a>
-                <a href="{{ route('users.index') }}" class="btn btn-outline-secondary py-2 text-decoration-none">
-                    Ver Directorio
-                </a>
-            </div>
-        </div>
+        @endif
     </div>
 </div>
 
-<!-- 4. Footer Stats SCADA Grid (Fiel a Stitch) -->
+<!-- 4. Footer Stats SCADA Grid -->
 <div class="row g-3">
     <!-- Health Index Card -->
     <div class="col-12 col-lg-4">
         <div class="stitch-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: var(--stitch-surface-container);">
             <div>
                 <h5 class="fw-bold text-dark mb-1">Índice de Salud del Galpón</h5>
-                <p class="text-muted small mb-0">Puntuación ambiental agregada basada en sensores de gases, temperatura, humedad y presión.</p>
+                <p class="text-muted small mb-0">Puntuación ambiental calculada a partir de sensores de temperatura, gases y ventilación.</p>
             </div>
             <div class="mt-4 d-flex align-items-baseline gap-2">
                 <span class="display-4 fw-bold" style="color: var(--stitch-secondary);">{{ round($latest->health_index ?? 94, 0) }}</span>
@@ -326,7 +337,7 @@
             </div>
             <div class="col-6 col-sm-3">
                 <div class="stitch-card operational-tile p-3 h-100 text-center d-flex flex-column justify-content-center">
-                    <span class="font-label-caps">Tiempo de Actividad</span>
+                    <span class="font-label-caps">Tiempo Actividad</span>
                     <h3 class="fw-bold text-dark mb-0 my-1">{{ $systemStatus['uptime'] }}</h3>
                     <span class="badge bg-success bg-opacity-10 text-success small mx-auto">{{ $systemStatus['uptime_status'] }}</span>
                 </div>
@@ -348,17 +359,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    // Configuración de telemetría inyectada para dashboard.js
-    window.SCADA_TELEMETRY_DATA = {
-        labels: {!! json_encode($chartLabels) !!},
-        temp: {!! json_encode($chartTemp) !!},
-        humidity: {!! json_encode($chartHumidity) !!},
-        pressure: {!! json_encode($chartPressure) !!}
-    };
-</script>
-<script src="{{ asset('js/dashboard.js') }}"></script>
 @endsection

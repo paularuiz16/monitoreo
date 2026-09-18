@@ -3,25 +3,32 @@
    ========================================================================== */
 
 :root {
-    /* Stitch Color Palette */
-    --stitch-primary: #091523;
-    --stitch-primary-container: #1e2a38;
-    --stitch-secondary: #1b6d24;
-    --stitch-secondary-light: #2E7D32;
-    --stitch-secondary-container: #a0f399;
-    --stitch-secondary-fixed: #a3f69c;
-    --stitch-background: #f8f9fb;
+    /* Paleta Verde y Azul Tecnológico */
+    --stitch-primary: #0f2744;
+    --stitch-primary-light: #0284c7;
+    --stitch-primary-container: #e0f2fe;
+    --stitch-secondary: #059669;
+    --stitch-secondary-light: #10b981;
+    --stitch-secondary-container: #d1fae5;
+    --stitch-secondary-fixed: #34d399;
+    --stitch-blue: #0284c7;
+    --stitch-blue-dark: #0369a1;
+    --stitch-blue-container: #e0f2fe;
+    --stitch-green: #059669;
+    --stitch-green-dark: #047857;
+    --stitch-green-container: #d1fae5;
+    --stitch-background: #f0fdf4;
     --stitch-surface: #ffffff;
-    --stitch-surface-container: #eceef0;
-    --stitch-surface-low: #f2f4f6;
-    --stitch-outline: #75777c;
-    --stitch-outline-variant: #e0e3e5;
-    --stitch-on-surface: #191c1e;
-    --stitch-on-surface-variant: #44474c;
-    --stitch-warning: #e17100;
-    --stitch-warning-bg: #fff3e0;
-    --stitch-error: #ba1a1a;
-    --stitch-error-bg: #ffdad6;
+    --stitch-surface-container: #f1f5f9;
+    --stitch-surface-low: #f8fafc;
+    --stitch-outline: #64748b;
+    --stitch-outline-variant: #e2e8f0;
+    --stitch-on-surface: #0f172a;
+    --stitch-on-surface-variant: #334155;
+    --stitch-warning: #f59e0b;
+    --stitch-warning-bg: #fef3c7;
+    --stitch-error: #ef4444;
+    --stitch-error-bg: #fee2e2;
     --stitch-info: #0284c7;
     --stitch-info-bg: #e0f2fe;
 
@@ -30,8 +37,8 @@
     --stitch-radius-sm: 8px;
     --stitch-radius-md: 12px;
     --stitch-radius-lg: 16px;
-    --stitch-shadow-card: 0px 4px 20px rgba(30, 42, 56, 0.05);
-    --stitch-shadow-hover: 0px 8px 25px rgba(30, 42, 56, 0.09);
+    --stitch-shadow-card: 0px 4px 20px rgba(15, 39, 68, 0.06);
+    --stitch-shadow-hover: 0px 8px 25px rgba(2, 132, 199, 0.12);
     --stitch-transition-speed: 0.25s;
 }
 
@@ -87,9 +94,9 @@ body {
     box-shadow: var(--stitch-shadow-hover);
 }
 
-/* Buttons */
+/* Buttons con Gradientes Verdes y Azules */
 .btn-green-gradient {
-    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
     color: #ffffff;
     border: none;
     border-radius: var(--stitch-radius-md);
@@ -98,18 +105,30 @@ body {
 }
 
 .btn-green-gradient:hover {
-    background: linear-gradient(135deg, #388E3C 0%, #2E7D32 100%);
+    background: linear-gradient(135deg, #047857 0%, #059669 100%);
     color: #ffffff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(27, 109, 36, 0.28);
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
 }
 
-.btn-green-gradient:active {
-    transform: translateY(0);
+.btn-blue-gradient {
+    background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--stitch-radius-md);
+    font-weight: 600;
+    transition: all var(--stitch-transition-speed) ease;
+}
+
+.btn-blue-gradient:hover {
+    background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
 }
 
 .btn-primary-gradient {
-    background: linear-gradient(135deg, var(--stitch-primary) 0%, var(--stitch-secondary) 100%);
+    background: linear-gradient(135deg, #059669 0%, #0284c7 100%);
     color: #ffffff;
     border: none;
     border-radius: var(--stitch-radius-md);
@@ -118,10 +137,10 @@ body {
 }
 
 .btn-primary-gradient:hover {
+    background: linear-gradient(135deg, #047857 0%, #0369a1 100%);
     color: #ffffff;
-    opacity: 0.95;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(9, 21, 35, 0.22);
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
 }
 
 /* Forms */
@@ -157,7 +176,7 @@ body {
 /* Badges */
 .badge-stitch-secondary {
     background-color: var(--stitch-secondary-container);
-    color: #1b6d24;
+    color: var(--stitch-secondary);
     font-weight: 700;
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
@@ -166,8 +185,9 @@ body {
 }
 
 .badge-stitch-admin {
-    background-color: #e8eaf6;
-    color: #283593;
+    background-color: #e0f2fe;
+    color: #0284c7;
+    border: 1px solid #bae6fd;
     font-weight: 700;
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
@@ -176,8 +196,9 @@ body {
 }
 
 .badge-stitch-tecnico {
-    background-color: #e0f2f1;
-    color: #00695c;
+    background-color: #f0fdf4;
+    color: #059669;
+    border: 1px solid #bbf7d0;
     font-weight: 700;
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
@@ -186,8 +207,9 @@ body {
 }
 
 .badge-stitch-operador {
-    background-color: #f1f8e9;
-    color: #33691e;
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
     font-weight: 700;
     font-size: 0.7rem;
     padding: 0.35rem 0.65rem;
@@ -212,15 +234,15 @@ body {
 @keyframes pulseTelemetry {
     0% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(27, 109, 36, 0.7);
+        box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7);
     }
     70% {
         transform: scale(1);
-        box-shadow: 0 0 0 8px rgba(27, 109, 36, 0);
+        box-shadow: 0 0 0 8px rgba(5, 150, 105, 0);
     }
     100% {
         transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(27, 109, 36, 0);
+        box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
     }
 }
 
@@ -244,10 +266,10 @@ body {
 }
 
 .telemetry-pulse-dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    background-color: #1b6d24;
+    background-color: #10b981;
     display: inline-block;
     animation: pulseTelemetry 2s infinite;
 }

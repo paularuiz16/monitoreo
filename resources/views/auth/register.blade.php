@@ -9,15 +9,6 @@
             <!-- Left Side: Visual/Context Area (Fiel a Stitch Registro) -->
             <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-between p-5 text-white auth-hero-panel">
                 <div>
-                    <!-- Brand Header -->
-                    <div class="d-flex align-items-center gap-3 mb-5">
-                        <div class="rounded-3 d-flex align-items-center justify-content-center text-white shadow" 
-                             style="width: 48px; height: 48px; background-color: var(--stitch-secondary);">
-                            <span class="material-symbols-outlined fs-3">precision_manufacturing</span>
-                        </div>
-                        <h4 class="fw-bold mb-0 text-white tracking-tight">AvícolaPro Control</h4>
-                    </div>
-
                     <h1 class="display-6 fw-bold mb-3 text-white lh-tight">
                         Optimización <br><span style="color: var(--stitch-secondary-fixed);">en tiempo real.</span>
                     </h1>
@@ -41,16 +32,9 @@
 
             <!-- Right Side: Registration Form -->
             <div class="col-12 col-lg-7 p-4 p-md-5 bg-white">
-                <!-- Mobile Logo Header -->
-                <div class="d-lg-none d-flex align-items-center gap-2 mb-4">
-                    <div class="rounded-2 d-flex align-items-center justify-content-center text-white" 
-                         style="width: 36px; height: 36px; background-color: var(--stitch-secondary);">
-                        <span class="material-symbols-outlined fs-5">precision_manufacturing</span>
-                    </div>
-                    <h5 class="fw-bold text-dark mb-0">AvícolaPro Control</h5>
-                </div>
-
-                <div class="mb-4">
+                <!-- Logo Header con el nuevo logo generado -->
+                <div class="text-center text-md-start mb-4">
+                    <img src="{{ asset('images/logo.png') }}" alt="AvícolaPro Control" class="rounded-4 shadow-sm mb-3" style="max-height: 80px; width: auto; object-fit: contain;" />
                     <h2 class="fw-bold text-dark mb-1">Crear cuenta</h2>
                     <p class="text-muted small">Gestiona y monitorea el estado de las cortinas y el ambiente de tus galpones en tiempo real.</p>
                 </div>

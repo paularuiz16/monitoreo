@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'AvícolaPro Control - Sistema de Monitoreo IoT')</title>
+    <title>@yield('title', 'AvícolaPro Control')</title>
+
+    <!-- Favicon del Proyecto con el logo en JPG -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}?v=11">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}?v=11">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}?v=11">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=11">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.jpg') }}?v=11">
 
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

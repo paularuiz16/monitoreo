@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Crear Usuario Administrador Principal
-        $admin = User::firstOrCreate(
+        // 1. Crear Usuario Administrador Principal (Actualizado)
+        $admin = User::updateOrCreate(
             ['email' => 'admin@poultrysense.io'],
             [
-                'name' => 'Carlos',
-                'last_name' => 'Mendoza',
+                'name' => 'María Paula',
+                'last_name' => 'Ruiz',
                 'password' => Hash::make('password123'),
                 'role' => 'admin',
                 'created_by' => null,
@@ -30,22 +30,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Crear Técnico de Operaciones (creado internamente por el Admin)
-        User::firstOrCreate(
-            ['email' => 'tecnico@poultrysense.io'],
-            [
-                'name' => 'Andrés',
-                'last_name' => 'Gómez',
-                'password' => Hash::make('password123'),
-                'role' => 'tecnico',
-                'created_by' => $admin->id,
-                'is_active' => true,
-                'email_verified_at' => now(),
-            ]
-        );
-
-        // 3. Crear Operador de Galpón (creado internamente por el Admin)
-        User::firstOrCreate(
+        // 2. Crear Operador 1 (creado internamente por el Admin)
+        User::updateOrCreate(
             ['email' => 'operator@poultrysense.io'],
             [
                 'name' => 'María',
@@ -58,15 +44,29 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 4. Crear un usuario autoregistrado (created_by = null) para contrastar
-        User::firstOrCreate(
-            ['email' => 'juan.perez@empresa.com'],
+        // 3. Crear Operador 2 (creado internamente por el Admin)
+        User::updateOrCreate(
+            ['email' => 'operator2@poultrysense.io'],
             [
                 'name' => 'Juan',
                 'last_name' => 'Pérez',
                 'password' => Hash::make('password123'),
                 'role' => 'operador',
-                'created_by' => null,
+                'created_by' => $admin->id,
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        // 4. Crear Técnico de Operaciones (soporte técnico)
+        User::updateOrCreate(
+            ['email' => 'tecnico@poultrysense.io'],
+            [
+                'name' => 'Andrés',
+                'last_name' => 'Gómez',
+                'password' => Hash::make('password123'),
+                'role' => 'tecnico',
+                'created_by' => $admin->id,
                 'is_active' => true,
                 'email_verified_at' => now(),
             ]

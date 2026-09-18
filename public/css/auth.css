@@ -2,51 +2,74 @@
    AvícolaPro Control - Authentication Screens (Login & Register)
    ========================================================================== */
 
-/* Split Screen Left Visual Hero */
+/* Split Screen Left Visual Hero: La imagen de fondo es el logotipo oficial con gradiente azul-verde */
 .auth-hero-panel {
-    background: linear-gradient(135deg, rgba(9, 21, 35, 0.94) 0%, rgba(30, 42, 56, 0.88) 100%), 
-                url('https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    background-color: #0f2744;
+    background-image: linear-gradient(135deg, rgba(15, 39, 68, 0.88) 0%, rgba(6, 78, 59, 0.82) 100%), 
+                      url('../images/logo.jpg');
+    background-position: right 6% center;
+    background-repeat: no-repeat;
+    background-size: contain;
     position: relative;
     overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+    .auth-hero-panel {
+        background-position: center center;
+        background-size: cover;
+    }
 }
 
 .auth-hero-panel::before {
     content: '';
     position: absolute;
-    top: -50%;
+    top: -40%;
     right: -20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(27, 109, 36, 0.25) 0%, transparent 70%);
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(2, 132, 199, 0.28) 0%, rgba(16, 185, 129, 0.20) 40%, transparent 70%);
     pointer-events: none;
     z-index: 1;
 }
 
-/* Platform Tag Badge */
-.platform-tag-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.85rem;
-    border-radius: 9999px;
-    background: rgba(160, 243, 153, 0.15);
-    border: 1px solid rgba(163, 246, 156, 0.35);
-    color: #a3f69c;
-}
-
 /* Metric Pill Cards in Auth Hero */
 .auth-metric-pill {
-    padding: 1rem 1.25rem;
+    padding: 0.65rem 1rem;
     border-radius: var(--stitch-radius-md);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    transition: transform 0.25s ease, background-color 0.25s ease;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(10px);
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .auth-metric-pill:hover {
     transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Contenedor sin scroll en desktop */
+@media (min-width: 768px) {
+    body {
+        overflow: hidden !important;
+        height: 100vh !important;
+    }
+    .auth-fullscreen-container {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+    }
+    .auth-hero-panel {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+    }
+    .auth-form-scrollable {
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow-y: auto;
+    }
 }
 
 /* Password Strength Meter */

@@ -119,12 +119,101 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'latest',
             'stats24h',
+            'alerts',
+            'systemStatus'
+        ));
+    }
+
+    /**
+     * Módulo dedicado e interactivo: Panel de Control Climático.
+     */
+    public function climateControl(): View
+    {
+        $latest = TelemetryData::orderBy('recorded_at', 'desc')->first();
+
+        if (!$latest) {
+            $latest = TelemetryData::create([
+                'temperature' => 24.0,
+                'external_temperature' => 28.0,
+                'humidity' => 65.0,
+                'atmospheric_pressure' => 1014.2,
+                'curtain_position' => 45.0,
+                'curtain_mode' => 'AUTO',
+                'ventilation_status' => 'OPTIMO',
+                'health_index' => 94.0,
+                'device_id' => 'ESP32-SGalpon-01',
+                'recorded_at' => now(),
+            ]);
+        }
+
+        $tempDiff = round(($latest->external_temperature ?? 28.0) - $latest->temperature, 1);
+        $isComfort = ($latest->temperature >= 21.0 && $latest->temperature <= 26.5 && $latest->humidity >= 50.0 && $latest->humidity <= 75.0);
+
+        $climateStatus = [
+            'temp_indoor' => round($latest->temperature, 1),
+            'temp_outdoor' => round($latest->external_temperature ?? 28.0, 1),
+            'temp_diff' => $tempDiff,
+            'humidity' => round($latest->humidity, 1),
+            'comfort_label' => $isComfort ? 'Zona de Confort Ideal' : 'Fuera de Rango Óptimo',
+            'comfort_type' => $isComfort ? 'success' : 'warning',
+            'target_temp' => 23.5,
+            'target_humidity' => 60.0,
+            'ventilation_level' => $latest->ventilation_status ?? 'OPTIMO',
+            'cooling_pads' => ($latest->temperature > 25.5) ? 'Nebulización Activa' : 'En Espera (Standby)',
+            'exhaust_fans' => ($latest->temperature > 24.0) ? '3 de 4 en Operación' : '2 de 4 en Operación',
+        ];
+
+        return view('climate', compact('latest', 'climateStatus'));
+    }
+
+    /**
+     * Módulo dedicado: Tendencias SCADA y Telemetría Histórica.
+     */
+    public function scadaTrends(): View
+    {
+        $latest = TelemetryData::orderBy('recorded_at', 'desc')->first();
+
+        $recentReadings = TelemetryData::where('recorded_at', '>=', now()->subHours(24))
+            ->orderBy('recorded_at', 'asc')
+            ->get();
+
+        if ($recentReadings->count() < 6) {
+            $recentReadings = TelemetryData::orderBy('recorded_at', 'desc')
+                ->take(18)
+                ->get()
+                ->reverse()
+                ->values();
+        }
+
+        $chartLabels = [];
+        $chartTemp = [];
+        $chartHumidity = [];
+
+        foreach ($recentReadings as $reading) {
+            $chartLabels[] = Carbon::parse($reading->recorded_at)->format('H:i');
+            $chartTemp[] = (float) $reading->temperature;
+            $chartHumidity[] = (float) $reading->humidity;
+        }
+
+        $stats24h = [
+            'temp_avg' => round($recentReadings->avg('temperature') ?? 24.0, 1),
+            'temp_max' => round($recentReadings->max('temperature') ?? 27.5, 1),
+            'temp_min' => round($recentReadings->min('temperature') ?? 21.0, 1),
+            'hum_avg' => round($recentReadings->avg('humidity') ?? 65.0, 1),
+            'hum_max' => round($recentReadings->max('humidity') ?? 75.0, 1),
+            'hum_min' => round($recentReadings->min('humidity') ?? 55.0, 1),
+            'readings_count' => $recentReadings->count(),
+        ];
+
+        $historyTable = TelemetryData::orderBy('recorded_at', 'desc')->paginate(12);
+
+        return view('scada', compact(
+            'latest',
+            'stats24h',
             'chartLabels',
             'chartTemp',
             'chartHumidity',
-            'chartPressure',
-            'alerts',
-            'systemStatus'
+            'historyTable'
         ));
     }
 
@@ -153,7 +242,7 @@ class DashboardController extends Controller
             'recorded_at' => now(),
         ]);
 
-        return back()->with('status', 'Ajuste de cortinas aplicado correctamente.');
+        return back()->with('status', 'Ajuste ambiental aplicado correctamente.');
     }
 
     /**

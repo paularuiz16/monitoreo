@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'AvícolaPro Control - Sistema de Monitoreo IoT')</title>
 
+    <!-- Favicon del Proyecto -->
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}?v=20">
+    <link rel="shortcut icon" type="image/jpeg" href="{{ asset('images/logo.jpg') }}?v=20">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}?v=20">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=20">
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,11 +37,8 @@
             <button class="btn btn-sm d-lg-none p-1 border-0" id="sidebarToggle" type="button" aria-label="Toggle Sidebar">
                 <span class="material-symbols-outlined text-dark fs-3">menu</span>
             </button>
-            <a href="{{ route('dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
-                <div class="rounded-3 d-flex align-items-center justify-content-center text-white" style="width: 36px; height: 36px; background-color: var(--stitch-secondary);">
-                    <span class="material-symbols-outlined fs-5">precision_manufacturing</span>
-                </div>
-                <span class="fs-5 fw-bold text-dark text-uppercase tracking-tight">AvícolaPro <span style="color: var(--stitch-secondary);">Control</span></span>
+            <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none" title="AvícolaPro Control">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-2 shadow-sm" style="height: 42px; width: auto;" />
             </a>
         </div>
 
@@ -55,7 +58,7 @@
             @auth
             <div class="dropdown">
                 <button class="btn btn-outline-light border d-flex align-items-center gap-2 py-1 px-2 rounded-pill bg-white shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 32px; height: 32px; background: var(--stitch-primary);">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold" style="width: 32px; height: 32px; background: linear-gradient(135deg, #059669 0%, #0284c7 100%);">
                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </div>
                     <div class="d-none d-md-block text-start pe-2">
@@ -75,10 +78,23 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item rounded-2 d-flex align-items-center gap-2 py-2" href="{{ route('users.index') }}">
-                            <span class="material-symbols-outlined text-primary fs-5">group</span> Gestión de Usuarios
+                        <a class="dropdown-item rounded-2 d-flex align-items-center gap-2 py-2" href="{{ route('climate.index') }}">
+                            <span class="material-symbols-outlined text-success fs-5">thermostat</span> Control Climático
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item rounded-2 d-flex align-items-center gap-2 py-2" href="{{ route('scada.index') }}">
+                            <span class="material-symbols-outlined text-primary fs-5">leaderboard</span> Tendencias SCADA
+                        </a>
+                    </li>
+                    @if (Auth::user()->isAdmin())
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item rounded-2 d-flex align-items-center gap-2 py-2" href="{{ route('users.index') }}">
+                            <span class="material-symbols-outlined text-primary fs-5">group</span> Gestión de Personal
+                        </a>
+                    </li>
+                    @endif
                     <li><hr class="dropdown-divider"></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
@@ -98,7 +114,7 @@
         <!-- Sidebar Navigation -->
         <aside class="stitch-sidebar" id="stitchSidebar">
             <div class="mb-4 px-2">
-                <h6 class="fw-bold text-dark text-uppercase small mb-1">Operaciones Principales</h6>
+                <h6 class="fw-bold text-dark text-uppercase small mb-1">Operaciones Galpón</h6>
                 <p class="text-muted small mb-0">Red de Sensores Activa (Galpón 01)</p>
             </div>
 
@@ -107,22 +123,28 @@
                     <span class="material-symbols-outlined fs-5">dashboard</span>
                     <span>Panel de Control</span>
                 </a>
+                <a class="nav-link-stitch {{ request()->routeIs('climate.*') ? 'active' : '' }}" href="{{ route('climate.index') }}">
+                    <span class="material-symbols-outlined fs-5">thermostat</span>
+                    <span>Control Climático</span>
+                </a>
+                <a class="nav-link-stitch {{ request()->routeIs('scada.*') ? 'active' : '' }}" href="{{ route('scada.index') }}">
+                    <span class="material-symbols-outlined fs-5">leaderboard</span>
+                    <span>Tendencias SCADA</span>
+                </a>
+
+                @if (Auth::user()->isAdmin())
+                <div class="pt-3 pb-1 px-2 border-top mt-2">
+                    <span class="font-label-caps text-muted" style="font-size: 10px;">Administración</span>
+                </div>
                 <a class="nav-link-stitch {{ request()->routeIs('users.index') ? 'active' : '' }}" href="{{ route('users.index') }}">
                     <span class="material-symbols-outlined fs-5">group</span>
-                    <span>Gestión de Usuarios</span>
+                    <span>Gestión de Personal</span>
                 </a>
                 <a class="nav-link-stitch {{ request()->routeIs('users.create') ? 'active' : '' }}" href="{{ route('users.create') }}">
                     <span class="material-symbols-outlined fs-5">person_add</span>
                     <span>Crear Usuario Interno</span>
                 </a>
-                <a class="nav-link-stitch" href="{{ route('dashboard') }}#seccion-sensores">
-                    <span class="material-symbols-outlined fs-5">thermostat</span>
-                    <span>Control Climático</span>
-                </a>
-                <a class="nav-link-stitch" href="{{ route('dashboard') }}#seccion-tendencias">
-                    <span class="material-symbols-outlined fs-5">leaderboard</span>
-                    <span>Tendencias SCADA</span>
-                </a>
+                @endif
             </nav>
 
             <div class="mt-auto px-1 pt-3 border-top">

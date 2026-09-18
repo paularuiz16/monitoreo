@@ -33,42 +33,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     {
                         label: 'Temp. Interior (°C)',
                         data: temp,
-                        borderColor: '#1b6d24',
-                        backgroundColor: 'rgba(27, 109, 36, 0.08)',
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.08)',
                         borderWidth: 2.5,
                         fill: true,
                         tension: 0.35,
                         pointRadius: 2,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#1b6d24',
+                        pointBackgroundColor: '#059669',
                         yAxisID: 'yTemp'
                     },
                     {
                         label: 'Humedad (%)',
                         data: humidity,
-                        borderColor: '#091523',
-                        backgroundColor: 'rgba(9, 21, 35, 0.03)',
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.04)',
                         borderWidth: 2,
                         borderDash: [4, 4],
                         fill: false,
                         tension: 0.35,
                         pointRadius: 2,
                         pointHoverRadius: 6,
-                        pointBackgroundColor: '#091523',
+                        pointBackgroundColor: '#0284c7',
                         yAxisID: 'yHum'
-                    },
-                    {
-                        label: 'Presión (hPa)',
-                        data: pressure,
-                        borderColor: '#0284c7',
-                        backgroundColor: 'transparent',
-                        borderWidth: 1.5,
-                        fill: false,
-                        tension: 0.35,
-                        pointRadius: 1,
-                        pointHoverRadius: 5,
-                        hidden: true,
-                        yAxisID: 'yPress'
                     }
                 ]
             },

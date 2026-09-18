@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/curtain', [DashboardController::class, 'updateCurtain'])->name('dashboard.curtain');
     Route::get('/api/telemetry/latest', [DashboardController::class, 'apiLatest'])->name('api.telemetry.latest');
 
+    // Paneles dedicados solicitados
+    Route::get('/control-climatico', [DashboardController::class, 'climateControl'])->name('climate.index');
+    Route::get('/tendencias-scada', [DashboardController::class, 'scadaTrends'])->name('scada.index');
+
     // Módulo administrativo interno de creación y gestión de usuarios
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
