@@ -71,7 +71,7 @@
 <body>
     <div class="error-card">
         <div class="mb-3">
-            <img src="{{ asset('images/logo.png') }}" alt="AvícolaPro Control" style="max-height: 60px; width: auto; object-fit: contain;">
+            <img src="{{ asset('images/logo.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/logo.jpg') }}';" alt="AvícolaPro Control" style="max-height: 60px; width: auto; object-fit: contain;">
         </div>
 
         <div class="error-code-badge">

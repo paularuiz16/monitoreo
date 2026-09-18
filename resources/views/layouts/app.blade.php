@@ -39,7 +39,7 @@
                 <span class="material-symbols-outlined text-dark fs-3">menu</span>
             </button>
             <a href="{{ route('dashboard') }}" class="d-flex align-items-center text-decoration-none" title="AvícolaPro Control">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="rounded-2 shadow-sm" style="height: 42px; width: auto;" />
+                <img src="{{ asset('images/logo.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/logo.jpg') }}';" alt="Logo" class="rounded-2 shadow-sm" style="height: 42px; width: auto;" />
             </a>
         </div>
 

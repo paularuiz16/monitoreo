@@ -34,7 +34,7 @@
             <div class="col-12 col-lg-7 p-4 p-md-5 bg-white">
                 <!-- Logo Header con el nuevo logo generado -->
                 <div class="text-center text-md-start mb-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="AvícolaPro Control" class="rounded-4 shadow-sm mb-3" style="max-height: 80px; width: auto; object-fit: contain;" />
+                    <img src="{{ asset('images/logo.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/logo.jpg') }}';" alt="AvícolaPro Control" class="rounded-4 shadow-sm mb-3" style="max-height: 80px; width: auto; object-fit: contain;" />
                     <h2 class="fw-bold text-dark mb-1">Crear cuenta</h2>
                     <p class="text-muted small">Gestiona y monitorea el estado de las cortinas y el ambiente de tus galpones en tiempo real.</p>
                 </div>

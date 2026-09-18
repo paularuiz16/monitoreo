@@ -44,7 +44,7 @@
         <div class="w-100" style="max-width: 390px;">
             <!-- Parte de arriba: Solo el logo sin nada de letras -->
             <div class="text-center mb-3">
-                <img src="{{ asset('images/logo.png') }}" alt="AvícolaPro Control" class="rounded-3 shadow-sm" style="max-height: 70px; width: auto; max-width: 100%; object-fit: contain;" />
+                <img src="{{ asset('images/logo.png') }}" onerror="this.onerror=null; this.src='{{ asset('images/logo.jpg') }}';" alt="AvícolaPro Control" class="rounded-3 shadow-sm" style="max-height: 70px; width: auto; max-width: 100%; object-fit: contain;" />
             </div>
 
             <!-- Flash alerts -->
